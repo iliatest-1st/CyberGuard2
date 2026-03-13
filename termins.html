@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список терминов по кибербезопасности | CyberGuard Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+            --glossary: #4aefff;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-glossary {
+            background: linear-gradient(to right, var(--glossary), var(--primary));
+            color: white;
+        }
+        
+        .btn-glossary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 239, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a {
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+        
+        /* Герой-секция страницы */
+        .page-hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(74, 239, 255, 0.7);
+        }
+        
+        .page-hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Основной контент */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--glossary), var(--primary));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        /* Поиск и фильтры */
+        .glossary-controls {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            margin-bottom: 40px;
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 30px;
+            border: 1px solid var(--dark-border);
+            background: var(--dark-bg);
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: var(--glossary);
+            color: var(--dark-bg);
+            border-color: var(--glossary);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Алфавитная навигация */
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--dark-card);
+            border-radius: 15px;
+        }
+        
+        .letter-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .letter-btn.active {
+            background: var(--glossary);
+            color: var(--dark-bg);
+            border-color: var(--glossary);
+        }
+        
+        .letter-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Список терминов */
+        .terms-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .term-card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .term-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--glossary), var(--primary));
+        }
+        
+        .term-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .term-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .term-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .term-category {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+        }
+        
+        .term-description {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .term-example {
+            background: var(--dark-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-style: italic;
+            border-left: 3px solid var(--glossary);
+        }
+        
+        .term-example strong {
+            color: var(--glossary);
+        }
+        
+        /* Быстрый доступ к популярным терминам */
+        .popular-terms {
+            margin-bottom: 50px;
+        }
+        
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .popular-term {
+            background: var(--dark-card);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .popular-term:hover {
+            transform: translateY(-3px);
+            border-color: var(--glossary);
+        }
+        
+        .popular-term a {
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .page-hero p {
+                font-size: 18px;
+            }
+            
+            .terms-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .alphabet-nav {
+                gap: 5px;
+            }
+            
+            .letter-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Дополнительные стили */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-size: 18px;
+            grid-column: 1 / -1;
+        }
+        
+        .category-phishing {
+            border-color: var(--danger);
+        }
+        
+        .category-phishing .term-category {
+            background: rgba(255, 74, 74, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+        
+        .category-malware {
+            border-color: var(--warning);
+        }
+        
+        .category-malware .term-category {
+            background: rgba(255, 184, 74, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+        
+        .category-network {
+            border-color: var(--primary);
+        }
+        
+        .category-network .term-category {
+            background: rgba(74, 158, 255, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .category-authentication {
+            border-color: var(--success);
+        }
+        
+        .category-authentication .term-category {
+            background: rgba(74, 255, 122, 0.1);
+            color: var(--success);
+            border-color: var(--success);
+        }
+        
+        .category-general {
+            border-color: var(--glossary);
+        }
+        
+        .category-general .term-category {
+            background: rgba(74, 239, 255, 0.1);
+            color: var(--glossary);
+            border-color: var(--glossary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="onepart.html#home" class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="index.html#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="onepart.html#home">Главная</a> > <a href="onepart.html#resources">Ресурсы</a> > Список терминов
+        </div>
+    </div>
+
+    <!-- Герой-секция страницы -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Список терминов по кибербезопасности</h1>
+            <p>Полный словарь терминов и понятий в области кибербезопасности. Найдите объяснение любого термина от А до Я.</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Поиск по терминам</h2>
+            <p class="section-subtitle">Используйте поиск или фильтры для быстрого нахождения нужного термина.</p>
+            
+            <div class="glossary-controls">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="search-input" placeholder="Введите термин для поиска...">
+                </div>
+                
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Все термины</button>
+                    <button class="filter-btn" data-filter="phishing">Фишинг</button>
+                    <button class="filter-btn" data-filter="malware">Вредоносное ПО</button>
+                    <button class="filter-btn" data-filter="network">Сетевая безопасность</button>
+                    <button class="filter-btn" data-filter="authentication">Аутентификация</button>
+                    <button class="filter-btn" data-filter="general">Общие термины</button>
+                </div>
+            </div>
+            
+            <div class="alphabet-nav" id="alphabet-nav">
+                <!-- Буквы будут добавлены через JavaScript -->
+            </div>
+            
+            <h3 class="section-title">Популярные термины</h3>
+            
+            <div class="popular-terms">
+                <div class="popular-grid">
+                    <div class="popular-term">
+                        <a href="#фишинг">Фишинг</a>
+                    </div>
+                    <div class="popular-term">
+                        <a href="#ransomware">Ransomware</a>
+                    </div>
+                    <div class="popular-term">
+                        <a href="#ddos">DDoS-атака</a>
+                    </div>
+                    <div class="popular-term">
+                        <a href="#vpn">VPN</a>
+                    </div>
+                    <div class="popular-term">
+                        <a href="#2fa">2FA</a>
+                    </div>
+                    <div class="popular-term">
+                        <a href="#шифрование">Шифрование</a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Все термины</h3>
+            
+            <div class="terms-container" id="terms-container">
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Список терминов</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; Создатель Петров Илья.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Термины словаря
+        const glossaryTerms = [
+            {
+                term: "Фишинг",
+                description: "Вид интернет-мошенничества, целью которого является получение доступа к конфиденциальным данным пользователей — логинам, паролям, данным банковских карт.",
+                category: "phishing",
+                example: "Пример: Письмо от 'банка' с просьбой подтвердить данные учетной записи по ссылке."
+            },
+            {
+                term: "Ransomware",
+                description: "Вредоносное программное обеспечение, которое блокирует доступ к компьютерной системе или данным до тех пор, пока жертва не заплатит выкуп.",
+                category: "malware",
+                example: "Пример: Программа-вымогатель, которая шифрует файлы и требует Bitcoin для их расшифровки."
+            },
+            {
+                term: "DDoS-атака",
+                description: "Распределенная атака на отказ в обслуживании, направленная на перегрузку сервера, сети или веб-сайта огромным количеством запросов.",
+                category: "network",
+                example: "Пример: Одновременная отправка миллионов запросов на веб-сервер, делающая его недоступным."
+            },
+            {
+                term: "VPN",
+                description: "Виртуальная частная сеть, которая создает зашифрованное соединение между устройством пользователя и интернетом.",
+                category: "network",
+                example: "Пример: Использование VPN для безопасного подключения к публичной Wi-Fi сети."
+            },
+            {
+                term: "2FA",
+                description: "Двухфакторная аутентификация — метод защиты учетной записи, требующий два различных способа подтверждения личности.",
+                category: "authentication",
+                example: "Пример: Ввод пароля и кода из SMS или приложения-аутентификатора."
+            },
+            {
+                term: "Шифрование",
+                description: "Процесс преобразования информации в шифрованный текст, который может быть прочитан только при наличии ключа дешифрования.",
+                category: "general",
+                example: "Пример: Использование HTTPS для шифрования данных между браузером и веб-сайтом."
+            },
+            {
+                term: "Антивирус",
+                description: "Программное обеспечение для обнаружения, предотвращения и удаления вредоносных программ.",
+                category: "malware",
+                example: "Пример: Защита компьютера от вирусов, троянов и шпионского ПО."
+            },
+            {
+                term: "Ботнет",
+                description: "Сеть зараженных компьютеров, управляемых злоумышленником для проведения атак.",
+                category: "malware",
+                example: "Пример: Сеть из тысяч компьютеров, используемая для DDoS-атак."
+            },
+            {
+                term: "Брандмауэр",
+                description: "Система сетевой безопасности, которая контролирует и фильтрует входящий и исходящий сетевой трафик.",
+                category: "network",
+                example: "Пример: Блокировка неавторизованных подключений к компьютеру или сети."
+            },
+            {
+                term: "Киберпреступность",
+                description: "Преступная деятельность, осуществляемая с использованием компьютеров и интернета.",
+                category: "general",
+                example: "Пример: Кража конфиденциальных данных, мошенничество с платежами."
+            },
+            {
+                term: "Криптография",
+                description: "Наука о методах обеспечения конфиденциальности, целостности и аутентичности информации.",
+                category: "general",
+                example: "Пример: Создание и взлом шифров, цифровые подписи."
+            },
+            {
+                term: "Менеджер паролей",
+                description: "Программа для безопасного хранения и управления паролями.",
+                category: "authentication",
+                example: "Пример: Хранение всех паролей в зашифрованном виде с одним мастер-паролем."
+            },
+            {
+                term: "Социальная инженерия",
+                description: "Метод манипулирования людьми с целью получения конфиденциальной информации.",
+                category: "phishing",
+                example: "Пример: Телефонный звонок от 'техподдержки' с просьбой сообщить пароль."
+            },
+            {
+                term: "Троян",
+                description: "Вредоносная программа, маскирующаяся под легитимное программное обеспечение.",
+                category: "malware",
+                example: "Пример: Программа, замаскированная под обновление Flash Player, но устанавливающая бэкдор."
+            },
+            {
+                term: "Уязвимость",
+                description: "Слабое место в системе, которое может быть использовано для несанкционированного доступа.",
+                category: "general",
+                example: "Пример: Ошибка в коде веб-приложения, позволяющая выполнить SQL-инъекцию."
+            },
+            {
+                term: "Файрволл",
+                description: "Система безопасности, контролирующая сетевой трафик на основе predetermined правил.",
+                category: "network",
+                example: "Пример: Блокировка определенных портов или IP-адресов."
+            },
+            {
+                term: "Червяк",
+                description: "Вредоносная программа, способная самостоятельно распространяться по сети.",
+                category: "malware",
+                example: "Пример: Программа, рассылающая себя по электронной почте всем контактам зараженного пользователя."
+            },
+            {
+                term: "Шпионское ПО",
+                description: "Программа, тайно собирающая информацию о действиях пользователя.",
+                category: "malware",
+                example: "Пример: Программа, записывающая нажатия клавиш для кражи паролей."
+            },
+            {
+                term: "Эксплойт",
+                description: "Код или методика, использующая уязвимость в программном обеспечении.",
+                category: "general",
+                example: "Пример: Специально созданный запрос, вызывающий переполнение буфера в программе."
+            },
+            {
+                term: "Zero-day",
+                description: "Уязвимость, о которой неизвестно производителю программного обеспечения.",
+                category: "general",
+                example: "Пример: Атака на уязвимость, для которой еще не выпущено исправление."
+            }
+        ];
+        
+        // Элементы интерфейса
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const alphabetNav = document.getElementById('alphabet-nav');
+        const termsContainer = document.getElementById('terms-container');
+        
+        let currentFilter = 'all';
+        let currentSearch = '';
+        
+        // Инициализация алфавитной навигации
+        function initAlphabetNav() {
+            const alphabet = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            
+            for (let i = 0; i < alphabet.length; i++) {
+                const letter = alphabet[i];
+                const letterBtn = document.createElement('div');
+                letterBtn.className = 'letter-btn';
+                letterBtn.textContent = letter;
+                letterBtn.setAttribute('data-letter', letter);
+                
+                letterBtn.addEventListener('click', () => {
+                    filterByLetter(letter);
+                });
+                
+                alphabetNav.appendChild(letterBtn);
+            }
+        }
+        
+        // Отображение терминов
+        function displayTerms() {
+            termsContainer.innerHTML = '';
+            
+            // Фильтрация терминов
+            let filteredTerms = glossaryTerms.filter(term => {
+                // Фильтр по категории
+                if (currentFilter !== 'all' && term.category !== currentFilter) {
+                    return false;
+                }
+                
+                // Фильтр по поиску
+                if (currentSearch && !term.term.toLowerCase().includes(currentSearch.toLowerCase()) && 
+                    !term.description.toLowerCase().includes(currentSearch.toLowerCase())) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Сортировка по алфавиту
+            filteredTerms.sort((a, b) => a.term.localeCompare(b.term));
+            
+            // Отображение терминов
+            if (filteredTerms.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.innerHTML = '<i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px;"></i><p>Термины не найдены. Попробуйте изменить критерии поиска.</p>';
+                termsContainer.appendChild(noResults);
+            } else {
+                filteredTerms.forEach(term => {
+                    const termCard = document.createElement('div');
+                    termCard.className = `term-card category-${term.category}`;
+                    termCard.id = term.term.toLowerCase().replace(/[^a-zа-я0-9]/g, '-');
+                    
+                    termCard.innerHTML = `
+                        <div class="term-header">
+                            <div class="term-title">${term.term}</div>
+                            <div class="term-category">${getCategoryName(term.category)}</div>
+                        </div>
+                        <div class="term-description">${term.description}</div>
+                        <div class="term-example">
+                            <strong>Пример:</strong> ${term.example}
+                        </div>
+                    `;
+                    
+                    termsContainer.appendChild(termCard);
+                });
+            }
+        }
+        
+        // Получение названия категории
+        function getCategoryName(category) {
+            const categoryNames = {
+                'phishing': 'Фишинг',
+                'malware': 'Вредоносное ПО',
+                'network': 'Сетевая безопасность',
+                'authentication': 'Аутентификация',
+                'general': 'Общие термины'
+            };
+            
+            return categoryNames[category] || category;
+        }
+        
+        // Фильтрация по категории
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Убрать активный класс у всех кнопок
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Добавить активный класс текущей кнопке
+                button.classList.add('active');
+                
+                // Установить текущий фильтр
+                currentFilter = button.getAttribute('data-filter');
+                
+                // Обновить отображение терминов
+                displayTerms();
+            });
+        });
+        
+        // Фильтрация по букве
+        function filterByLetter(letter) {
+            // Убрать активный класс у всех букв
+            document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Добавить активный класс текущей букве
+            document.querySelector(`.letter-btn[data-letter="${letter}"]`).classList.add('active');
+            
+            // Прокрутка к терминам на эту букву
+            const firstTermWithLetter = glossaryTerms.find(term => 
+                term.term.toUpperCase().startsWith(letter));
+            
+            if (firstTermWithLetter) {
+                const termId = firstTermWithLetter.term.toLowerCase().replace(/[^a-zа-я0-9]/g, '-');
+                const termElement = document.getElementById(termId);
+                
+                if (termElement) {
+                    termElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+        
+        // Поиск по терминам
+        searchInput.addEventListener('input', () => {
+            currentSearch = searchInput.value;
+            displayTerms();
+        });
+        
+        // Обработка кликов по популярным терминам
+        document.querySelectorAll('.popular-term a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const termId = link.getAttribute('href').substring(1);
+                const termElement = document.getElementById(termId);
+                
+                if (termElement) {
+                    termElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Добавление эффекта выделения
+                    termElement.style.transform = 'scale(1.02)';
+                    termElement.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.5)';
+                    
+                    setTimeout(() => {
+                        termElement.style.transform = '';
+                        termElement.style.boxShadow = '';
+                    }, 1000);
+                }
+            });
+        });
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('load', () => {
+            initAlphabetNav();
+            displayTerms();
+        });
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>

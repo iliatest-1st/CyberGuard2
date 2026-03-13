@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест знаний по кибербезопасности | CyberGuard Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+            --quiz: #9c4aff;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(to right, var(--quiz), var(--secondary));
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(156, 74, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a {
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+        
+        /* Герой-секция страницы */
+        .page-hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(156, 74, 255, 0.7);
+        }
+        
+        .page-hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Основной контент */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--quiz), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        /* Тест */
+        .quiz-container {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--quiz), var(--secondary));
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-header h3 {
+            font-size: 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quiz-header h3 i {
+            margin-right: 10px;
+            color: var(--quiz);
+        }
+        
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            height: 10px;
+            background: var(--dark-border);
+            border-radius: 5px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--quiz), var(--secondary));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .quiz-content {
+            display: none;
+        }
+        
+        .quiz-content.active {
+            display: block;
+        }
+        
+        .question-number {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 20px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            margin-bottom: 30px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .option:hover {
+            background: rgba(156, 74, 255, 0.1);
+            border-color: var(--quiz);
+        }
+        
+        .option.selected {
+            background: rgba(156, 74, 255, 0.2);
+            border-color: var(--quiz);
+        }
+        
+        .option.correct {
+            background: rgba(74, 255, 122, 0.2);
+            border-color: var(--success);
+        }
+        
+        .option.incorrect {
+            background: rgba(255, 74, 74, 0.2);
+            border-color: var(--danger);
+        }
+        
+        .option input {
+            display: none;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .option-marker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--dark-border);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .option.selected .option-marker {
+            border-color: var(--quiz);
+            background: var(--quiz);
+        }
+        
+        .option.selected .option-marker::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+        
+        .option-text {
+            flex: 1;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .quiz-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .result-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .result-feedback {
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: var(--text-light);
+        }
+        
+        .result-details {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .result-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-title i {
+            margin-right: 10px;
+        }
+        
+        .category-stats {
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--dark-border);
+            border-radius: 4px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .category-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s;
+        }
+        
+        .category-percent {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        /* Карточки тем */
+        .topics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .topic-card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .topic-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--quiz);
+        }
+        
+        .topic-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .topic-card p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .page-hero p {
+                font-size: 18px;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .quiz-controls .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="onepart.html#home" class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="index.html#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="onepart.html#home">Главная</a> > <a href="onepart.html#tools">Инструменты</a> > Тест знаний
+        </div>
+    </div>
+
+    <!-- Герой-секция страницы -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Тест знаний по кибербезопасности</h1>
+            <p>Проверьте свои знания в области кибербезопасности. Узнайте, насколько хорошо вы защищены от современных угроз.</p>
+            <button class="btn btn-quiz" id="start-quiz">Начать тест</button>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="content-section">
+        <div class="container">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3><i class="fas fa-graduation-cap"></i> Тест знаний по кибербезопасности</h3>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quiz-progress"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">Вопрос 0 из 10</div>
+                </div>
+                
+                <!-- Начальный экран -->
+                <div class="quiz-content active" id="start-screen">
+                    <h3>Добро пожаловать в тест знаний по кибербезопасности!</h3>
+                    <p>Этот тест проверит ваши знания в различных областях кибербезопасности:</p>
+                    <ul>
+                        <li>Фишинг и социальная инженерия</li>
+                        <li>Пароли и аутентификация</li>
+                        <li>Защита от вредоносного ПО</li>
+                        <li>Безопасность в интернете</li>
+                        <li>Защита персональных данных</li>
+                    </ul>
+                    <p>Тест состоит из 10 вопросов. По окончании вы получите детальный отчет с рекомендациями.</p>
+                    <button class="btn btn-quiz" id="start-quiz-btn">Начать тест</button>
+                </div>
+                
+                <!-- Экран вопроса -->
+                <div class="quiz-content" id="question-screen">
+                    <div class="question-number" id="question-number">Вопрос 1 из 10</div>
+                    <div class="question-text" id="question-text"></div>
+                    
+                    <div class="options-container" id="options-container">
+                        <!-- Варианты ответов будут добавлены через JavaScript -->
+                    </div>
+                    
+                    <div class="quiz-controls">
+                        <button class="btn btn-outline" id="prev-question" disabled>Предыдущий</button>
+                        <button class="btn btn-primary" id="next-question">Следующий</button>
+                    </div>
+                </div>
+                
+                <!-- Экран результатов -->
+                <div class="quiz-content" id="results-screen">
+                    <div class="quiz-results">
+                        <div class="result-icon" id="result-icon"></div>
+                        <div class="result-title" id="result-title">Результаты теста</div>
+                        <div class="result-score" id="result-score">0%</div>
+                        <div class="result-feedback" id="result-feedback"></div>
+                        
+                        <div class="result-details">
+                            <div class="result-category">
+                                <div class="category-title"><i class="fas fa-fishing-rod"></i> Фишинг и социальная инженерия</div>
+                                <div class="category-stats">
+                                    <div class="category-bar">
+                                        <div class="category-fill" id="phishing-score" style="width: 0%; background: var(--quiz);"></div>
+                                    </div>
+                                    <div class="category-percent" id="phishing-percent">0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-category">
+                                <div class="category-title"><i class="fas fa-key"></i> Пароли и аутентификация</div>
+                                <div class="category-stats">
+                                    <div class="category-bar">
+                                        <div class="category-fill" id="passwords-score" style="width: 0%; background: var(--quiz);"></div>
+                                    </div>
+                                    <div class="category-percent" id="passwords-percent">0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-category">
+                                <div class="category-title"><i class="fas fa-shield-alt"></i> Защита от вредоносного ПО</div>
+                                <div class="category-stats">
+                                    <div class="category-bar">
+                                        <div class="category-fill" id="malware-score" style="width: 0%; background: var(--quiz);"></div>
+                                    </div>
+                                    <div class="category-percent" id="malware-percent">0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-category">
+                                <div class="category-title"><i class="fas fa-globe"></i> Безопасность в интернете</div>
+                                <div class="category-stats">
+                                    <div class="category-bar">
+                                        <div class="category-fill" id="internet-score" style="width: 0%; background: var(--quiz);"></div>
+                                    </div>
+                                    <div class="category-percent" id="internet-percent">0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-category">
+                                <div class="category-title"><i class="fas fa-user-shield"></i> Защита персональных данных</div>
+                                <div class="category-stats">
+                                    <div class="category-bar">
+                                        <div class="category-fill" id="privacy-score" style="width: 0%; background: var(--quiz);"></div>
+                                    </div>
+                                    <div class="category-percent" id="privacy-percent">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-quiz" id="restart-quiz">Пройти тест еще раз</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Темы для изучения</h2>
+            <p class="section-subtitle">Углубите свои знания в этих ключевых областях кибербезопасности.</p>
+            
+            <div class="topics-container">
+                <div class="topic-card">
+                    <div class="topic-icon"><i class="fas fa-fishing-rod"></i></div>
+                    <h3>Фишинг и социальная инженерия</h3>
+                    <p>Узнайте, как распознавать фишинговые письма, сообщения и телефонные звонки, которые пытаются обманом получить вашу личную информацию.</p>
+                    <a href="phishing.html" class="btn btn-outline">Изучить</a>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-icon"><i class="fas fa-key"></i></div>
+                    <h3>Пароли и аутентификация</h3>
+                    <p>Научитесь создавать надежные пароли, использовать менеджеры паролей и настраивать двухфакторную аутентификацию для защиты аккаунтов.</p>
+                    <a href="password-generator.html" class="btn btn-outline">Изучить</a>
+                </div>
+                
+                <div class="topic-card">
+                    <div class="topic-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Защита от вредоносного ПО</h3>
+                    <p>Узнайте о различных типах вредоносного программного обеспечения и методах защиты от вирусов, троянов и программ-вымогателей.</p>
+                    <a href="ransomware.html" class="btn btn-outline">Изучить</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CyberGuard</h3>
+                    <p>Экспертный центр кибербезопасности, предоставляющий актуальную информацию, инструменты и рекомендации для защиты в цифровом мире.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="termins.html#"><i class="fas fa-chevron-right"></i> Глоссарий терминов</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@cyberguard.ru</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Бачатский, ул. Кибербезопасности, 13</li>
+                        <li><i class="fas fa-clock"></i> Пн-Пт: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 CyberGuard. Все права защищены. | <a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Вопросы для теста
+        const quizQuestions = [
+            {
+                question: "Что из перечисленного является самым надежным способом защиты от фишинга?",
+                options: [
+                    "Использование сложных паролей",
+                    "Критическое мышление и проверка источников",
+                    "Антивирусное программное обеспечение",
+                    "Использование VPN"
+                ],
+                correct: 1,
+                category: "phishing",
+                explanation: "Критическое мышление и проверка источников — самый эффективный способ защиты от фишинга, так как фишинг атакует человеческий фактор, а не технические уязвимости."
+            },
+            {
+                question: "Какой из этих паролей является наиболее безопасным?",
+                options: [
+                    "password123",
+                    "qwerty",
+                    "X7$kL2#pQ9!",
+                    "123456"
+                ],
+                correct: 2,
+                category: "passwords",
+                explanation: "Пароль 'X7$kL2#pQ9!' содержит буквы в разных регистрах, цифры и специальные символы, что делает его очень надежным."
+            },
+            {
+                question: "Что следует делать при получении письма-вымогателя (ransomware)?",
+                options: [
+                    "Немедленно оплатить выкуп",
+                    "Удалить письмо и ничего не делать",
+                    "Сообщить в службу безопасности и не платить выкуп",
+                    "Попытаться самостоятельно удалить вредоносное ПО"
+                ],
+                correct: 2,
+                category: "malware",
+                explanation: "Никогда не платите выкуп — это финансирует преступников и не гарантирует возврат данных. Свяжитесь со специалистами по безопасности."
+            },
+            {
+                question: "Что такое двухфакторная аутентификация (2FA)?",
+                options: [
+                    "Использование двух паролей для входа",
+                    "Подтверждение входа через второе устройство или приложение",
+                    "Вход с двух разных устройств одновременно",
+                    "Система с двумя уровнями административных прав"
+                ],
+                correct: 1,
+                category: "passwords",
+                explanation: "2FA добавляет второй уровень безопасности, требуя не только пароль, но и код из приложения, SMS или биометрические данные."
+            },
+            {
+                question: "Какой признак чаще всего указывает на фишинговое письмо?",
+                options: [
+                    "Наличие логотипа компании",
+                    "Срочность и угрозы в тексте",
+                    "Профессиональное оформление",
+                    "Отсутствие грамматических ошибок"
+                ],
+                correct: 1,
+                category: "phishing",
+                explanation: "Создание искусственной срочности и угроз — распространенная тактика фишинга, направленная на то, чтобы заставить жертву действовать необдуманно."
+            },
+            {
+                question: "Что такое VPN и для чего он используется?",
+                options: [
+                    "Виртуальная частная сеть для шифрования интернет-трафика",
+                    "Виртуальный почтовый ящик для анонимной переписки",
+                    "Система виртуальных платежей",
+                    "Программа для создания виртуальных машин"
+                ],
+                correct: 0,
+                category: "internet",
+                explanation: "VPN создает зашифрованное соединение между вашим устройством и интернетом, защищая вашу приватность и данные."
+            },
+            {
+                question: "Как часто следует обновлять операционную систему и приложения?",
+                options: [
+                    "Только при появлении новых функций",
+                    "Раз в год",
+                    "Как только становятся доступны обновления безопасности",
+                    "Никогда, чтобы не нарушать стабильность системы"
+                ],
+                correct: 2,
+                category: "malware",
+                explanation: "Обновления безопасности закрывают уязвимости, которые могут использовать злоумышленники. Установка их сразу после выпуска критически важна."
+            },
+            {
+                question: "Что такое фишинг с целевым spear phishing?",
+                options: [
+                    "Массовая рассылка фишинговых писем",
+                    "Фишинг, направленный на конкретных лиц или организации",
+                    "Фишинг через социальные сети",
+                    "Фишинг с использованием телефонных звонков"
+                ],
+                correct: 1,
+                category: "phishing",
+                explanation: "Spear phishing — это целевые атаки, использующие персональную информацию о жертве для увеличения доверия."
+            },
+            {
+                question: "Какая информация считается конфиденциальной и не должна передаваться по email?",
+                options: [
+                    "Номер паспорта и данные банковской карты",
+                    "Адрес электронной почты",
+                    "Номер телефона",
+                    "Имя и фамилия"
+                ],
+                correct: 0,
+                category: "privacy",
+                explanation: "Паспортные данные, номера карт, пароли и другая критически важная информация никогда не должна передаваться по email."
+            },
+            {
+                question: "Что следует делать при подозрении на утечку пароля?",
+                options: [
+                    "Ничего, если пароль сложный",
+                    "Сменить пароль на всех аккаунтах, где он использовался",
+                    "Добавить символы к существующему паролю",
+                    "Сообщить об этом друзьям"
+                ],
+                correct: 1,
+                category: "passwords",
+                explanation: "При подозрении на компрометацию пароля необходимо немедленно сменить его на всех сервисах, где он использовался."
+            }
+        ];
+        
+        // Элементы интерфейса
+        const startScreen = document.getElementById('start-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const prevQuestionBtn = document.getElementById('prev-question');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const restartQuizBtn = document.getElementById('restart-quiz');
+        const quizProgress = document.getElementById('quiz-progress');
+        const progressText = document.getElementById('progress-text');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        
+        // Элементы результатов
+        const resultIcon = document.getElementById('result-icon');
+        const resultTitle = document.getElementById('result-title');
+        const resultScore = document.getElementById('result-score');
+        const resultFeedback = document.getElementById('result-feedback');
+        
+        // Переменные теста
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+        
+        // Запуск теста
+        startQuizBtn.addEventListener('click', startQuiz);
+        document.getElementById('start-quiz').addEventListener('click', startQuiz);
+        
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestion = 0;
+            userAnswers = [];
+            
+            // Переключение экранов
+            startScreen.classList.remove('active');
+            questionScreen.classList.add('active');
+            resultsScreen.classList.remove('active');
+            
+            // Загрузка первого вопроса
+            loadQuestion(currentQuestion);
+        }
+        
+        // Загрузка вопроса
+        function loadQuestion(index) {
+            const question = quizQuestions[index];
+            
+            // Обновление прогресса
+            quizProgress.style.width = `${((index + 1) / quizQuestions.length) * 100}%`;
+            progressText.textContent = `Вопрос ${index + 1} из ${quizQuestions.length}`;
+            questionNumber.textContent = `Вопрос ${index + 1} из ${quizQuestions.length}`;
+            
+            // Текст вопроса
+            questionText.textContent = question.question;
+            
+            // Очистка вариантов ответов
+            optionsContainer.innerHTML = '';
+            
+            // Добавление вариантов ответов
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[index] === i) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <label class="option-label">
+                        <div class="option-marker"></div>
+                        <div class="option-text">${option}</div>
+                    </label>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(i));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Обновление кнопок навигации
+            prevQuestionBtn.disabled = index === 0;
+            nextQuestionBtn.textContent = index === quizQuestions.length - 1 ? 'Завершить тест' : 'Следующий';
+        }
+        
+        // Выбор варианта ответа
+        function selectOption(optionIndex) {
+            // Снятие выделения со всех вариантов
+            const options = optionsContainer.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Выделение выбранного варианта
+            options[optionIndex].classList.add('selected');
+            
+            // Сохранение ответа
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Активация кнопки "Следующий"
+            nextQuestionBtn.disabled = false;
+        }
+        
+        // Переход к следующему вопросу
+        nextQuestionBtn.addEventListener('click', () => {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                loadQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        });
+        
+        // Переход к предыдущему вопросу
+        prevQuestionBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion(currentQuestion);
+            }
+        });
+        
+        // Показ результатов
+        function showResults() {
+            // Расчет результатов
+            let correctAnswers = 0;
+            const categoryScores = {
+                phishing: { correct: 0, total: 0 },
+                passwords: { correct: 0, total: 0 },
+                malware: { correct: 0, total: 0 },
+                internet: { correct: 0, total: 0 },
+                privacy: { correct: 0, total: 0 }
+            };
+            
+            userAnswers.forEach((answer, index) => {
+                const question = quizQuestions[index];
+                
+                // Подсчет правильных ответов
+                if (answer === question.correct) {
+                    correctAnswers++;
+                    categoryScores[question.category].correct++;
+                }
+                
+                // Подсчет вопросов по категориям
+                categoryScores[question.category].total++;
+            });
+            
+            const score = Math.round((correctAnswers / quizQuestions.length) * 100);
+            
+            // Обновление результатов
+            resultScore.textContent = `${score}%`;
+            
+            // Установка иконки и текста в зависимости от результата
+            if (score >= 80) {
+                resultIcon.innerHTML = '<i class="fas fa-trophy" style="color: var(--success);"></i>';
+                resultTitle.textContent = 'Отличный результат!';
+                resultFeedback.textContent = 'Вы обладаете excellent знаниями в области кибербезопасности. Продолжайте в том же духе!';
+            } else if (score >= 60) {
+                resultIcon.innerHTML = '<i class="fas fa-award" style="color: var(--warning);"></i>';
+                resultTitle.textContent = 'Хороший результат!';
+                resultFeedback.textContent = 'У вас хорошие знания, но есть области, которые можно улучшить. Изучите рекомендации ниже.';
+            } else {
+                resultIcon.innerHTML = '<i class="fas fa-graduation-cap" style="color: var(--danger);"></i>';
+                resultTitle.textContent = 'Есть над чем поработать';
+                resultFeedback.textContent = 'Ваши знания в области кибербезопасности требуют улучшения. Изучите рекомендации и пройдите тест снова.';
+            }
+            
+            // Обновление результатов по категориям
+            Object.keys(categoryScores).forEach(category => {
+                const catData = categoryScores[category];
+                const percent = catData.total > 0 ? Math.round((catData.correct / catData.total) * 100) : 0;
+                
+                document.getElementById(`${category}-score`).style.width = `${percent}%`;
+                document.getElementById(`${category}-percent`).textContent = `${percent}%`;
+            });
+            
+            // Переключение экранов
+            questionScreen.classList.remove('active');
+            resultsScreen.classList.add('active');
+        }
+        
+        // Перезапуск теста
+        restartQuizBtn.addEventListener('click', startQuiz);
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard - Экспертный центр кибербезопасности</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Герой-секция */
+        .hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(74, 158, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(106, 74, 255, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(74, 158, 255, 0.7);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            margin: 0 auto 40px;
+            color: var(--text-light);
+            max-width: 800px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 80px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+        
+        /* Секции */
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 42px;
+            color: white;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 20px auto;
+            border-radius: 3px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        
+        /* Карточки */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 25px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .card p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        /* Таблицы */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--dark-card);
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        th {
+            background: var(--dark-border);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(74, 158, 255, 0.05);
+        }
+        
+        /* прогресс бары */
+        .skill-item {
+            margin-bottom: 30px;
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background: var(--dark-border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+        }
+        
+        /* Форма подписки */
+        .newsletter {
+            background: linear-gradient(to right, var(--dark-card), var(--dark-border));
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--dark-bg);
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .newsletter-button {
+            padding: 20px 30px;
+            border: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .newsletter-button:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary));
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 46px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .newsletter-input {
+                border-radius: 15px 15px 0 0;
+            }
+            
+            .newsletter-button {
+                border-radius: 0 0 15px 15px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        /* Дополнительные стили для новых разделов */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background: var(--dark-card);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quiz-container {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quiz-question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .quiz-option:hover {
+            background: rgba(74, 158, 255, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .quiz-result {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-good {
+            background: rgba(74, 255, 122, 0.1);
+            border: 1px solid var(--success);
+        }
+        
+        .result-bad {
+            background: rgba(255, 74, 74, 0.1);
+            border: 1px solid var(--danger);
+        }
+        
+        .glossary-term {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .glossary-term h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .case-study {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .case-study h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-item {
+            background: var(--dark-card);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .resource-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .resource-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главная страница -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Экспертный центр кибербезопасности</h1>
+                <p>Полное руководство по защите от киберугроз. От основ до продвинутых техник безопасности для частных лиц и организаций.</p>
+                <div class="hero-buttons">
+                    <a href="#threats" class="btn btn-primary">Изучить угрозы</a>
+                    <a href="#quiz" class="btn btn-outline">Проверить знания</a>
+                    <a href="#resources" class="btn btn-outline">Ресурсы</a>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Успешных атак можно предотвратить</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">43%</span>
+                        <span class="stat-label">Атак нацелены на малый бизнес</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">>6 мес.</span>
+                        <span class="stat-label">Среднее время обнаружения взлома</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел об угрозах -->
+    <section id="threats">
+        <div class="container">
+            <h2 class="section-title">Современные киберугрозы</h2>
+            <p class="section-subtitle">Понимание угроз — первый шаг к эффективной защите. Изучите самые распространенные виды кибератак и их характеристики.</p>
+
+            <div class="cards-container">
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-fishing-rod"></i></div>
+                    <h3>Фишинг и целевой фишинг</h3>
+                    <p>Мошеннические emails, сообщения и сайты, имитирующие легитимные источники для кражи учетных данных и личной информации.</p>
+                    <div class="card-footer">
+                        <span class="risk-level high">Высокий риск</span>
+                        <a href="twopart.html">Подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Программы-вымогатели (Ransomware)</h3>
+                    <p>Вредоносное ПО, которое шифрует файлы жертвы и требует выкуп за их расшифровку. Один из самых прибыльных видов кибератак.</p>
+                    <div class="card-footer">
+                        <span class="risk-level critical">Критический риск</span>
+                        <a href="threepart.html">Подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-server"></i></div>
+                    <h3>DDoS-атаки</h3>
+                    <p>Атаки на отказ в обслуживании, направленные на перегрузку серверов огромным количеством запросов, делая сервисы недоступными.</p>
+                    <div class="card-footer">
+                        <span class="risk-level medium">Средний риск</span>
+                        <a href="four.html">Подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Тип угрозы</th>
+                            <th>Цель</th>
+                            <th>Сложность обнаружения</th>
+                            <th>Потенциальный ущерб</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Фишинг</td>
+                            <td>Кража учетных данных</td>
+                            <td>Средняя</td>
+                            <td>Высокий</td>
+                        </tr>
+                        <tr>
+                            <td>Вымогатели</td>
+                            <td>Шантаж и получение выкупа</td>
+                            <td>Низкая</td>
+                            <td>Критический</td>
+                        </tr>
+                        <tr>
+                            <td>Уязвимости ПО</td>
+                            <td>Несанкционированный доступ</td>
+                            <td>Высокая</td>
+                            <td>Высокий</td>
+                        </tr>
+                        <tr>
+                            <td>Внутренние угрозы</td>
+                            <td>Кража данных сотрудниками</td>
+                            <td>Очень высокая</td>
+                            <td>Критический</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел о защите -->
+    <section id="protection">
+        <div class="container">
+            <h2 class="section-title">Стратегии защиты</h2>
+            <p class="section-subtitle">Многоуровневая защита — ключ к безопасности. Комбинация технических решений и осведомленности пользователей.</p>
+            
+            <div class="cards-container">
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-user-lock"></i></div>
+                    <h3>Аутентификация и доступ</h3>
+                    <p>Внедрение многофакторной аутентификации, строгих политик паролей и принципа минимальных привилегий.</p>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span>Эффективность</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Защита конечных точек</h3>
+                    <p>Антивирусное ПО, EDR-решения и регулярное обновление систем для защиты устройств от угроз.</p>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span>Эффективность</span>
+                            <span>78%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 78%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Сетевая безопасность</h3>
+                    <p>Файрволлы, системы обнаружения вторжений, сегментация сети и VPN для защиты данных в пути.</p>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span>Эффективность</span>
+                            <span>82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 82%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с инструментами -->
+    <section id="tools">
+        <div class="container">
+            <h2 class="section-title">Инструменты безопасности</h2>
+            <p class="section-subtitle">Практические инструменты для оценки и улучшения вашей кибербезопасности.</p>
+            
+            <div class="cards-container">
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-key"></i></div>
+                    <h3>Генератор и оценка паролей</h3>
+                    <p>Создавайте надежные пароли и проверяйте безопасность существующих.</p>
+                    <div class="card-footer">
+                        <a href="generatorpassword.html" class="btn btn-primary">Использовать</a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>Проверка уязвимостей</h3>
+                    <p>Сканируйте свои системы на наличие известных уязвимостей.</p>
+                    <div class="card-footer">
+                        <a href="vulncheck.html" class="btn btn-primary">Запустить сканирование</a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Анализатор фишинговых писем</h3>
+                    <p>Проверяйте подозрительные письма на признаки фишинга.</p>
+                    <div class="card-footer">
+                        <a href="analysis.html" class="btn btn-primary">Проверить письмо</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с тестом -->
+    <section id="quiz">
+        <div class="container">
+            <h2 class="section-title">Тест знаний по кибербезопасности</h2>
+            <p class="section-subtitle">Проверьте свои знания о киберугрозах и методах защиты.</p>
+            
+            <div class="quiz-container">
+                <div class="quiz-question" id="question">Какой из этих паролей является наиболее безопасным?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">password123</div>
+                    <div class="quiz-option" data-correct="false">qwerty</div>
+                    <div class="quiz-option" data-correct="true">X7$kL2#pQ9!</div>
+                    <div class="quiz-option" data-correct="false">123456</div>
+                </div>
+                <button class="btn btn-primary" id="submit-answer">Проверить ответ</button>
+                <div class="quiz-result" id="quiz-result">
+                    <h3 id="result-title">Результат</h3>
+                    <p id="result-text">Текст результата</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с новостями -->
+    <section id="news">
+        <div class="container">
+            <h2 class="section-title">Последние новости и инциденты</h2>
+            <p class="section-subtitle">Будьте в курсе последних событий в мире кибербезопасности.</p>
+            
+            <div class="cards-container">
+                <div class="card fade-in-up">
+                    <h3>Крупная атака вымогателей на больничную сеть</h3>
+                    <p>Хакеры зашифровали данные 20 больниц, требуя выкуп в 5 миллионов долларов. Атака парализовала работу медицинских учреждений на 3 дня.</p>
+                    <div class="card-footer">
+                        <span>2 дня назад</span>
+                        <a href="#">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <h3>Обнаружена новая уязвимость в популярном VPN-клиенте</h3>
+                    <p>Исследователи безопасности нашли критическую уязвимость, позволяющую злоумышленникам перехватывать трафик пользователей.</p>
+                    <div class="card-footer">
+                        <span>5 дней назад</span>
+                        <a href="#">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card fade-in-up">
+                    <h3>Правительство ужесточает требования к защите данных</h3>
+                    <p>Новые нормативные акты требуют от компаний внедрения дополнительных мер защиты персональных данных клиентов.</p>
+                    <div class="card-footer">
+                        <span>1 неделю назад</span>
+                        <a href="#">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с ресурсами -->
+    <section id="resources">
+        <div class="container">
+            <h2 class="section-title">Ресурсы</h2>
+            <p class="section-subtitle">Материалы для углубленного изучения кибербезопасности.</p>
+            
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-book"></i></div>
+                    <h3>Список терминов</h3>
+                    <p>Полный словарь терминов и понятий в области кибербезопасности.</p>
+                    <a href="termins.html#" class="btn btn-outline">Открыть</a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма подписки -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="section-title">Оставайтесь в безопасности</h2>
+            <p class="section-subtitle">Подпишитесь на нашу рассылку, чтобы получать актуальные предупреждения о угрозах и советы по защите.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Введите ваш email" required>
+                <button type="submit" class="newsletter-button">Подписаться</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CyberGuard</h3>
+                    <p>Экспертный центр кибербезопасности, предоставляющий актуальную информацию, инструменты и рекомендации для защиты в цифровом мире.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="termins.html#"><i class="fas fa-chevron-right"></i> Список терминов</a></li>
+                        <li><a href="infograph.html"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; Создатель Петров Илья.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Обновление активного пункта меню
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Обработка формы подписки
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            
+            if (email) {
+                alert(`Спасибо за подписку! На адрес ${email} будут приходить актуальные новости и предупреждения о киберугрозах.`);
+                this.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // Добавление эффекта параллакса для герой-секции
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.backgroundPosition = `center ${scrolled * 0.5}px`;
+        });
+
+        // Анимация появления элементов при прокрутке
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Функциональность теста
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        const submitButton = document.getElementById('submit-answer');
+        const quizResult = document.getElementById('quiz-result');
+        const resultTitle = document.getElementById('result-title');
+        const resultText = document.getElementById('result-text');
+        const nextButton = document.getElementById('next-question');
+        
+        let selectedOption = null;
+        
+        quizOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                quizOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedOption = this;
+            });
+        });
+        
+        submitButton.addEventListener('click', function() {
+            if (!selectedOption) {
+                alert('Пожалуйста, выберите вариант ответа!');
+                return;
+            }
+            
+            const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+            
+            if (isCorrect) {
+                quizResult.className = 'quiz-result result-good';
+                resultTitle.textContent = 'Правильно!';
+                resultText.textContent = 'Этот пароль содержит буквы в разных регистрах, цифры и специальные символы, что делает его очень надежным.';
+            } else {
+                quizResult.className = 'quiz-result result-bad';
+                resultTitle.textContent = 'Неправильно!';
+                resultText.textContent = 'Пароли "password123", "qwerty" и "123456" являются одними из самых ненадежных и часто взламываются.';
+            }
+            
+            quizResult.style.display = 'block';
+        });
+        
+
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Обновление активного пункта меню при прокрутке
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

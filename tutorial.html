@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаблоны политик безопасности | CyberGuard Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+            --policy: #4affc9;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-policy {
+            background: linear-gradient(to right, var(--policy), var(--primary));
+            color: white;
+        }
+        
+        .btn-policy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 255, 201, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a {
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+        
+        /* Герой-секция страницы */
+        .page-hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(74, 255, 201, 0.7);
+        }
+        
+        .page-hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Основной контент */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--policy), var(--primary));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        /* Поиск и фильтры */
+        .policy-controls {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            margin-bottom: 40px;
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 30px;
+            border: 1px solid var(--dark-border);
+            background: var(--dark-bg);
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: var(--policy);
+            color: var(--dark-bg);
+            border-color: var(--policy);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Галерея шаблонов */
+        .templates-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .template-card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .template-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--policy), var(--primary));
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .template-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--policy);
+        }
+        
+        .template-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .template-card p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            min-height: 60px;
+        }
+        
+        .template-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .template-format {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--dark-bg);
+            border: 1px solid var(--dark-border);
+        }
+        
+        .template-size {
+            color: var(--text-light);
+        }
+        
+        .template-features {
+            margin-bottom: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li i {
+            margin-right: 8px;
+            color: var(--policy);
+            width: 16px;
+        }
+        
+        /* Инструкция по использованию */
+        .instructions {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .instruction-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .instruction-step {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--policy);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .step-description {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .page-hero p {
+                font-size: 18px;
+            }
+            
+            .templates-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .instruction-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Дополнительные стили */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-size: 18px;
+            grid-column: 1 / -1;
+        }
+        
+        .format-docx {
+            background: rgba(74, 158, 255, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .format-pdf {
+            background: rgba(255, 74, 74, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+        
+        .format-rtf {
+            background: rgba(255, 184, 74, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="onepart.html#home" class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="index.html#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Обратные категории -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="onepart.html#home">Главная</a> > <a href="onepart.html#resources">Ресурсы</a> > Шаблоны политик безопасности
+        </div>
+    </div>
+
+    <!-- Главная страница -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Шаблоны политик безопасности</h1>
+            <p>Готовые шаблоны документов для внедрения в организации. Скачайте и адаптируйте под свои нужды.</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Библиотека шаблонов</h2>
+            <p class="section-subtitle">Используйте поиск или фильтры для быстрого нахождения нужного шаблона.</p>
+            
+            <div class="policy-controls">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="search-input" placeholder="Поиск шаблонов...">
+                </div>
+                
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Все шаблоны</button>
+                    <button class="filter-btn" data-filter="access">Управление доступом</button>
+                    <button class="filter-btn" data-filter="incident">Инциденты</button>
+                    <button class="filter-btn" data-filter="data">Защита данных</button>
+                    <button class="filter-btn" data-filter="network">Сетевая безопасность</button>
+                    <button class="filter-btn" data-filter="compliance">Соответствие</button>
+                </div>
+            </div>
+            
+            <div class="templates-container" id="templates-container">
+                <!-- Шаблоны будут добавлены через JavaScript -->
+            </div>
+            
+            <h2 class="section-title">Как использовать шаблоны</h2>
+            
+            <div class="instructions">
+                <p>Все шаблоны разработаны в соответствии с лучшими практиками кибербезопасности. Следуйте этой инструкции для их успешного внедрения:</p>
+                
+                <div class="instruction-steps">
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Скачайте шаблон</div>
+                        <div class="step-description">Выберите подходящий шаблон и скачайте его в нужном формате</div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Адаптируйте под организацию</div>
+                        <div class="step-description">Замените общие формулировки на специфичные для вашей компании</div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Согласуйте с отделами</div>
+                        <div class="step-description">Проведите обсуждение с IT, HR и юридическим отделами</div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Утвердите и внедрите</div>
+                        <div class="step-description">Официально утвердите политику и проведите обучение сотрудников</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>Рекомендации по внедрению</h3>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Начните с наиболее критичных политик (пароли, доступ к данным)</li>
+                    <li><i class="fas fa-check"></i> Учитывайте специфику вашей отрасли и законодательства</li>
+                    <li><i class="fas fa-check"></i> Регулярно пересматривайте и обновляйте политики (рекомендуется ежегодно)</li>
+                    <li><i class="fas fa-check"></i> Обеспечьте обучение сотрудников и тестирование знаний</li>
+                    <li><i class="fas fa-check"></i> Ведите журнал изменений для каждой политики</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CyberGuard</h3>
+                    <p>Экспертный центр кибербезопасности, предоставляющий актуальную информацию, инструменты и рекомендации для защиты в цифровом мире.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="termins.html#"><i class="fas fa-chevron-right"></i> Глоссарий терминов</a></li>
+                        <li><a href="infograph.html"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@cyberguard.ru</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Бачатский, ул. Кибербезопасности, 13</li>
+                        <li><i class="fas fa-clock"></i> Пн-Пт: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 CyberGuard. Все права защищены. | <a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные шаблонов
+        const templateData = [
+            {
+                id: 1,
+                title: "Политика использования паролей",
+                description: "Определяет требования к созданию, хранению и изменению паролей в организации.",
+                category: "access",
+                format: "docx",
+                size: "45 КБ",
+                features: [
+                    "Требования к сложности паролей",
+                    "Правила смены паролей",
+                    "Запрет на повторное использование",
+                    "Рекомендации по хранению"
+                ]
+            },
+            {
+                id: 2,
+                title: "Политика управления доступом",
+                description: "Регламентирует предоставление и отзыв прав доступа к информационным системам.",
+                category: "access",
+                format: "docx",
+                size: "52 КБ",
+                features: [
+                    "Принцип минимальных привилегий",
+                    "Процедура предоставления доступа",
+                    "Регулярный пересмотр прав",
+                    "Процедура отзыва доступа"
+                ]
+            },
+            {
+                id: 3,
+                title: "Политика реагирования на инциденты",
+                description: "Определяет процедуры обнаружения, анализа и устранения киберинцидентов.",
+                category: "incident",
+                format: "pdf",
+                size: "68 КБ",
+                features: [
+                    "Классификация инцидентов",
+                    "План реагирования",
+                    "Коммуникационные процедуры",
+                    "Документирование инцидентов"
+                ]
+            },
+            {
+                id: 4,
+                title: "Политика резервного копирования",
+                description: "Устанавливает правила создания, хранения и восстановления резервных копий данных.",
+                category: "data",
+                format: "docx",
+                size: "38 КБ",
+                features: [
+                    "График резервного копирования",
+                    "Требования к хранению бэкапов",
+                    "Процедура восстановления",
+                    "Тестирование резервных копий"
+                ]
+            },
+            {
+                id: 5,
+                title: "Политика использования электронной почты",
+                description: "Регламентирует правила работы с корпоративной электронной почтой.",
+                category: "data",
+                format: "rtf",
+                size: "41 КБ",
+                features: [
+                    "Правила переписки",
+                    "Обработка вложений",
+                    "Конфиденциальность переписки",
+                    "Использование подписи"
+                ]
+            },
+            {
+                id: 6,
+                title: "Политика сетевой безопасности",
+                description: "Определяет требования к защите корпоративной сети и удаленным подключениям.",
+                category: "network",
+                format: "docx",
+                size: "61 КБ",
+                features: [
+                    "Требования к VPN",
+                    "Настройка брандмауэров",
+                    "Мониторинг сетевой активности",
+                    "Политика Wi-Fi"
+                ]
+            },
+            {
+                id: 7,
+                title: "Политика использования мобильных устройств",
+                description: "Регламентирует использование личных и корпоративных мобильных устройств.",
+                category: "access",
+                format: "pdf",
+                size: "49 КБ",
+                features: [
+                    "Требования к защите устройств",
+                    "Правила использования личных устройств",
+                    "Политика удаленного стирания",
+                    "Использование корпоративных приложений"
+                ]
+            },
+            {
+                id: 8,
+                title: "Политика соответствия GDPR",
+                description: "Шаблон для организаций, работающих с персональными данными граждан ЕС.",
+                category: "compliance",
+                format: "docx",
+                size: "73 КБ",
+                features: [
+                    "Права субъектов данных",
+                    "Процедуры обработки запросов",
+                    "Ведение реестра обработки",
+                    "Уведомление о нарушениях"
+                ]
+            }
+        ];
+
+        // Элементы интерфейса
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const templatesContainer = document.getElementById('templates-container');
+        
+        let currentFilter = 'all';
+        let currentSearch = '';
+        
+        // Отображение шаблонов
+        function displayTemplates() {
+            templatesContainer.innerHTML = '';
+            
+            // Фильтрация шаблонов
+            let filteredTemplates = templateData.filter(template => {
+                // Фильтр по категории
+                if (currentFilter !== 'all' && template.category !== currentFilter) {
+                    return false;
+                }
+                
+                // Фильтр по поиску
+                if (currentSearch && !template.title.toLowerCase().includes(currentSearch.toLowerCase()) && 
+                    !template.description.toLowerCase().includes(currentSearch.toLowerCase())) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Отображение шаблонов
+            if (filteredTemplates.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.innerHTML = '<i class="fas fa-file-alt" style="font-size: 48px; margin-bottom: 20px;"></i><p>Шаблоны не найдены. Попробуйте изменить критерии поиска.</p>';
+                templatesContainer.appendChild(noResults);
+            } else {
+                filteredTemplates.forEach(template => {
+                    const templateCard = document.createElement('div');
+                    templateCard.className = 'template-card';
+                    
+                    templateCard.innerHTML = `
+                        <div class="template-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3>${template.title}</h3>
+                        <p>${template.description}</p>
+                        
+                        <div class="template-meta">
+                            <span class="template-format ${'format-' + template.format}">${template.format.toUpperCase()}</span>
+                            <span class="template-size">${template.size}</span>
+                        </div>
+                        
+                        <div class="template-features">
+                            <ul class="feature-list">
+                                ${template.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-policy download-btn" data-template-id="${template.id}">
+                            <i class="fas fa-download"></i> Скачать шаблон
+                        </button>
+                    `;
+                    
+                    templatesContainer.appendChild(templateCard);
+                });
+            }
+            
+            // Добавление обработчиков событий для кнопок скачивания
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const templateId = btn.getAttribute('data-template-id');
+                    downloadTemplate(templateId);
+                });
+            });
+        }
+        
+        // Скачивание шаблона
+        function downloadTemplate(templateId) {
+            const template = templateData.find(t => t.id == templateId);
+            
+            if (template) {
+                // Создание фиктивного файла для демонстрации
+                const content = `Это демонстрационная версия шаблона "${template.title}".\n\nВ реальной версии здесь был бы полный текст политики безопасности.`;
+                
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${template.title.replace(/[^a-zа-я0-9]/gi, '_')}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Показать уведомление
+                showDownloadNotification(template.title);
+            }
+        }
+        
+        // Показать уведомление о скачивании
+        function showDownloadNotification(title) {
+            // Создание уведомления
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--policy);
+                color: var(--dark-bg);
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                max-width: 300px;
+                animation: slideIn 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <i class="fas fa-check-circle" style="margin-right: 10px; font-size: 18px;"></i>
+                    <div>
+                        <div style="font-weight: 600;">Шаблон скачан</div>
+                        <div style="font-size: 14px;">${title}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Удаление уведомления через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+            
+            // Добавление CSS анимаций
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Фильтрация по категории
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                if (filter) {
+                    // Убрать активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Добавить активный класс текущей кнопке
+                    button.classList.add('active');
+                    
+                    // Установить текущий фильтр
+                    currentFilter = filter;
+                    
+                    // Обновить отображение шаблонов
+                    displayTemplates();
+                }
+            });
+        });
+        
+        // Поиск по шаблонам
+        searchInput.addEventListener('input', () => {
+            currentSearch = searchInput.value;
+            displayTemplates();
+        });
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('load', () => {
+            displayTemplates();
+        });
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка уязвимостей | CyberGuard Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+            --vulnerability: #ff9c4a;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(to right, var(--vulnerability), var(--warning));
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 156, 74, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a {
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+        
+        /* Герой-секция страницы */
+        .page-hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 156, 74, 0.7);
+        }
+        
+        .page-hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Основной контент */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--vulnerability), var(--warning));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        /* Инструменты */
+        .scanner-container {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scanner-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--vulnerability), var(--warning));
+        }
+        
+        .scanner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .scanner-header h3 {
+            font-size: 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .scanner-header h3 i {
+            margin-right: 10px;
+            color: var(--vulnerability);
+        }
+        
+        .scan-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .scan-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--dark-border);
+            background: var(--dark-bg);
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .scan-progress {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: var(--dark-border);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--vulnerability), var(--warning));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .scan-status {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .scan-results {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-item {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .critical .summary-value {
+            color: var(--danger);
+        }
+        
+        .high .summary-value {
+            color: var(--warning);
+        }
+        
+        .medium .summary-value {
+            color: var(--vulnerability);
+        }
+        
+        .low .summary-value {
+            color: var(--primary);
+        }
+        
+        .vulnerability-list {
+            margin-top: 30px;
+        }
+        
+        .vulnerability-item {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--dark-border);
+        }
+        
+        .vulnerability-item.critical {
+            border-left-color: var(--danger);
+        }
+        
+        .vulnerability-item.high {
+            border-left-color: var(--warning);
+        }
+        
+        .vulnerability-item.medium {
+            border-left-color: var(--vulnerability);
+        }
+        
+        .vulnerability-item.low {
+            border-left-color: var(--primary);
+        }
+        
+        .vulnerability-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .vulnerability-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .vulnerability-severity {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .severity-critical {
+            background: rgba(255, 74, 74, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .severity-high {
+            background: rgba(255, 184, 74, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        .severity-medium {
+            background: rgba(255, 156, 74, 0.2);
+            color: var(--vulnerability);
+            border: 1px solid var(--vulnerability);
+        }
+        
+        .severity-low {
+            background: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .vulnerability-description {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .vulnerability-solution {
+            background: rgba(74, 255, 122, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .vulnerability-solution h4 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
+        /* Карточки с типами сканирования */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--vulnerability), var(--warning));
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 25px;
+            color: var(--vulnerability);
+            text-align: center;
+        }
+        
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .card p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .page-hero p {
+                font-size: 18px;
+            }
+            
+            .scanner-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="onepart.html#home" class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="onepart.html#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Обратные категории -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="onepart.html#home">Главная</a> > <a href="onepart.html#tools">Инструменты</a> > Проверка уязвимостей
+        </div>
+    </div>
+
+    <!-- Главная страница -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Проверка уязвимостей</h1>
+            <p>Просканируйте вашу систему на наличие известных уязвимостей и получите рекомендации по их устранению.</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Сканер уязвимостей</h2>
+            <p class="section-subtitle">Выберите тип сканирования и целевой объект для проверки на уязвимости.</p>
+            
+            <div class="scanner-container">
+                <div class="scanner-header">
+                    <h3><i class="fas fa-search"></i> Настройки сканирования</h3>
+                </div>
+                
+                <div class="scan-form">
+                    <div class="form-group">
+                        <label for="scan-type">Тип сканирования:</label>
+                        <select id="scan-type">
+                            <option value="quick">Быстрое сканирование</option>
+                            <option value="full">Полное сканирование</option>
+                            <option value="web">Веб-приложения</option>
+                            <option value="network">Сетевое сканирование</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target">Цель сканирования:</label>
+                        <input type="text" id="target" placeholder="example.com или IP-адрес" value="example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="port-range">Диапазон портов:</label>
+                        <select id="port-range">
+                            <option value="common">Общие порты (1-1024)</option>
+                            <option value="all">Все порты (1-65535)</option>
+                            <option value="web">Веб-порты (80, 443, 8080)</option>
+                            <option value="custom">Выборочные порты</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="intensity">Интенсивность сканирования:</label>
+                        <select id="intensity">
+                            <option value="light">Легкая</option>
+                            <option value="medium" selected>Средняя</option>
+                            <option value="aggressive">Агрессивная</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn btn-warning" id="start-scan">Запустить сканирование</button>
+                
+                <div class="scan-progress" id="scan-progress">
+                    <div class="progress-text">
+                        <span>Сканирование...</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="scan-status" id="scan-status">Подготовка к сканированию...</div>
+                </div>
+                
+                <div class="scan-results" id="scan-results">
+                    <h3>Результаты сканирования</h3>
+                    
+                    <div class="results-summary">
+                        <div class="summary-item critical">
+                            <div class="summary-label">Критические</div>
+                            <div class="summary-value" id="critical-count">0</div>
+                            <div class="summary-desc">Уязвимости</div>
+                        </div>
+                        <div class="summary-item high">
+                            <div class="summary-label">Высокие</div>
+                            <div class="summary-value" id="high-count">0</div>
+                            <div class="summary-desc">Уязвимости</div>
+                        </div>
+                        <div class="summary-item medium">
+                            <div class="summary-label">Средние</div>
+                            <div class="summary-value" id="medium-count">0</div>
+                            <div class="summary-desc">Уязвимости</div>
+                        </div>
+                        <div class="summary-item low">
+                            <div class="summary-label">Низкие</div>
+                            <div class="summary-value" id="low-count">0</div>
+                            <div class="summary-desc">Уязвимости</div>
+                        </div>
+                    </div>
+                    
+                    <div class="vulnerability-list" id="vulnerability-list">
+                        <!-- Уязвимости будут добавлены через JavaScript -->
+                    </div>
+                    
+                    <button class="btn btn-primary" id="export-report">Экспортировать отчет</button>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Типы сканирования</h2>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Быстрое сканирование</h3>
+                    <p>Проверка основных уязвимостей и распространенных проблем безопасности. Идеально для регулярного мониторинга.</p>
+                    <ul>
+                        <li>Проверка общих портов</li>
+                        <li>Базовые тесты безопасности</li>
+                        <li>Время выполнения: 2-5 минут</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>Полное сканирование</h3>
+                    <p>Глубокий анализ всех аспектов безопасности системы. Включает все порты и расширенные тесты.</p>
+                    <ul>
+                        <li>Сканирование всех портов</li>
+                        <li>Расширенные тесты уязвимостей</li>
+                        <li>Время выполнения: 15-30 минут</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Веб-сканирование</h3>
+                    <p>Специализированная проверка веб-приложений на наличие уязвимостей OWASP Top 10.</p>
+                    <ul>
+                        <li>Тесты инъекций и XSS</li>
+                        <li>Проверка конфигурации</li>
+                        <li>Анализ веб-серверов</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="scanner-container">
+                <h3><i class="fas fa-lightbulb"></i> Рекомендации по безопасности</h3>
+                <p>После сканирования следуйте этим рекомендациям для повышения безопасности вашей системы:</p>
+                
+                <div class="vulnerability-item low">
+                    <div class="vulnerability-header">
+                        <div class="vulnerability-title">Регулярное обновление ПО</div>
+                        <span class="vulnerability-severity severity-low">Низкий риск</span>
+                    </div>
+                    <div class="vulnerability-description">
+                        Установите политику регулярного обновления операционной системы и приложений.
+                    </div>
+                </div>
+                
+                <div class="vulnerability-item medium">
+                    <div class="vulnerability-header">
+                        <div class="vulnerability-title">Настройка брандмауэра</div>
+                        <span class="vulnerability-severity severity-medium">Средний риск</span>
+                    </div>
+                    <div class="vulnerability-description">
+                        Закройте неиспользуемые порты и настройте правила фильтрации трафика.
+                    </div>
+                </div>
+                
+                <div class="vulnerability-item high">
+                    <div class="vulnerability-header">
+                        <div class="vulnerability-title">Аутентификация и доступ</div>
+                        <span class="vulnerability-severity severity-high">Высокий риск</span>
+                    </div>
+                    <div class="vulnerability-description">
+                        Внедрите многофакторную аутентификацию и принцип минимальных привилегий.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="termins.html#"><i class="fas fa-chevron-right"></i> Список терминов</a></li>
+                        <li><a href="infograph.html"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; Создатель Петров Илья.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Элементы сканера
+        const startScanButton = document.getElementById('start-scan');
+        const scanProgress = document.getElementById('scan-progress');
+        const progressFill = document.getElementById('progress-fill');
+        const progressPercent = document.getElementById('progress-percent');
+        const scanStatus = document.getElementById('scan-status');
+        const scanResults = document.getElementById('scan-results');
+        const vulnerabilityList = document.getElementById('vulnerability-list');
+        const exportReportButton = document.getElementById('export-report');
+        
+        // Элементы счетчиков уязвимостей
+        const criticalCount = document.getElementById('critical-count');
+        const highCount = document.getElementById('high-count');
+        const mediumCount = document.getElementById('medium-count');
+        const lowCount = document.getElementById('low-count');
+        
+        // Примеры уязвимостей для демонстрации
+        const vulnerabilityExamples = [
+            {
+                title: "Уязвимость SQL Injection",
+                severity: "critical",
+                description: "Обнаружена возможность SQL-инъекции в форме входа. Злоумышленник может получить несанкционированный доступ к базе данных.",
+                solution: "Используйте подготовленные запросы (prepared statements) и валидацию входных данных."
+            },
+            {
+                title: "Устаревшая версия WordPress",
+                severity: "high",
+                description: "Обнаружена устаревшая версия WordPress (4.5.2). Существуют известные уязвимости, которые могут быть использованы атакующими.",
+                solution: "Обновите WordPress до последней версии и все установленные плагины."
+            },
+            {
+                title: "Открытый порт 22 (SSH)",
+                severity: "medium",
+                description: "Порт 22 открыт для внешних подключений. Это может привести к brute-force атакам на сервис SSH.",
+                solution: "Ограничьте доступ к порту 22 по IP-адресам или используйте VPN для доступа."
+            },
+            {
+                title: "Слабые пароли пользователей",
+                severity: "high",
+                description: "Обнаружены учетные записи с простыми паролями, которые могут быть легко взломаны.",
+                solution: "Внедрите политику сложных паролей и двухфакторную аутентификацию."
+            },
+            {
+                title: "Отсутствие HTTPS",
+                severity: "medium",
+                description: "Веб-сайт не использует HTTPS, что подвергает риску передачу конфиденциальных данных.",
+                solution: "Установите SSL/TLS сертификат и перенаправьте трафик на HTTPS."
+            },
+            {
+                title: "Уязвимость XSS",
+                severity: "high",
+                description: "Обнаружена возможность межсайтового скриптинга (XSS) в поле поиска.",
+                solution: "Реализуйте фильтрацию и экранирование пользовательского ввода."
+            }
+        ];
+        
+        // Запуск сканирования
+        startScanButton.addEventListener('click', function() {
+            // Сброс предыдущих результатов
+            scanResults.style.display = 'none';
+            vulnerabilityList.innerHTML = '';
+            
+            // Показать прогресс сканирования
+            scanProgress.style.display = 'block';
+            startScanButton.disabled = true;
+            
+            // Симуляция процесса сканирования
+            simulateScan();
+        });
+        
+        // Симуляция процесса сканирования
+        function simulateScan() {
+            let progress = 0;
+            const scanInterval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress > 100) progress = 100;
+                
+                progressFill.style.width = progress + '%';
+                progressPercent.textContent = Math.round(progress) + '%';
+                
+                // Обновление статуса в зависимости от прогресса
+                if (progress < 20) {
+                    scanStatus.textContent = 'Обнаружение активных хостов...';
+                } else if (progress < 40) {
+                    scanStatus.textContent = 'Сканирование портов...';
+                } else if (progress < 60) {
+                    scanStatus.textContent = 'Проверка служб и версий...';
+                } else if (progress < 80) {
+                    scanStatus.textContent = 'Тестирование на уязвимости...';
+                } else {
+                    scanStatus.textContent = 'Формирование отчета...';
+                }
+                
+                // Завершение сканирования
+                if (progress >= 100) {
+                    clearInterval(scanInterval);
+                    setTimeout(() => {
+                        scanProgress.style.display = 'none';
+                        showScanResults();
+                        startScanButton.disabled = false;
+                    }, 1000);
+                }
+            }, 200);
+        }
+        
+        // Показать результаты сканирования
+        function showScanResults() {
+            // Генерация случайных результатов на основе примеров
+            const resultsCount = Math.floor(Math.random() * 3) + 3; // 3-5 уязвимостей
+            const selectedVulnerabilities = [];
+            const severityCount = { critical: 0, high: 0, medium: 0, low: 0 };
+            
+            // Выбор случайных уязвимостей
+            for (let i = 0; i < resultsCount; i++) {
+                const randomIndex = Math.floor(Math.random() * vulnerabilityExamples.length);
+                const vulnerability = vulnerabilityExamples[randomIndex];
+                
+                // Проверяем, нет ли уже этой уязвимости в результатах
+                if (!selectedVulnerabilities.includes(vulnerability)) {
+                    selectedVulnerabilities.push(vulnerability);
+                    severityCount[vulnerability.severity]++;
+                }
+            }
+            
+            // Обновление счетчиков
+            criticalCount.textContent = severityCount.critical;
+            highCount.textContent = severityCount.high;
+            mediumCount.textContent = severityCount.medium;
+            lowCount.textContent = severityCount.low;
+            
+            // Добавление уязвимостей в список
+            selectedVulnerabilities.forEach(vuln => {
+                const vulnElement = document.createElement('div');
+                vulnElement.className = `vulnerability-item ${vuln.severity}`;
+                
+                let severityClass, severityText;
+                switch (vuln.severity) {
+                    case 'critical':
+                        severityClass = 'severity-critical';
+                        severityText = 'Критический';
+                        break;
+                    case 'high':
+                        severityClass = 'severity-high';
+                        severityText = 'Высокий';
+                        break;
+                    case 'medium':
+                        severityClass = 'severity-medium';
+                        severityText = 'Средний';
+                        break;
+                    case 'low':
+                        severityClass = 'severity-low';
+                        severityText = 'Низкий';
+                        break;
+                }
+                
+                vulnElement.innerHTML = `
+                    <div class="vulnerability-header">
+                        <div class="vulnerability-title">${vuln.title}</div>
+                        <span class="vulnerability-severity ${severityClass}">${severityText} риск</span>
+                    </div>
+                    <div class="vulnerability-description">
+                        ${vuln.description}
+                    </div>
+                    <div class="vulnerability-solution">
+                        <h4><i class="fas fa-wrench"></i> Решение:</h4>
+                        <p>${vuln.solution}</p>
+                    </div>
+                `;
+                
+                vulnerabilityList.appendChild(vulnElement);
+            });
+            
+            // Показать результаты
+            scanResults.style.display = 'block';
+            
+            // Прокрутка к результатам
+            scanResults.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Экспорт отчета
+        exportReportButton.addEventListener('click', function() {
+            const scanType = document.getElementById('scan-type').options[document.getElementById('scan-type').selectedIndex].text;
+            const target = document.getElementById('target').value;
+            const date = new Date().toLocaleDateString('ru-RU');
+            
+            let reportContent = `Отчет сканирования уязвимостей\n`;
+            reportContent += `Дата: ${date}\n`;
+            reportContent += `Тип сканирования: ${scanType}\n`;
+            reportContent += `Цель: ${target}\n\n`;
+            reportContent += `Результаты:\n`;
+            reportContent += `- Критические уязвимости: ${criticalCount.textContent}\n`;
+            reportContent += `- Высокие уязвимости: ${highCount.textContent}\n`;
+            reportContent += `- Средние уязвимости: ${mediumCount.textContent}\n`;
+            reportContent += `- Низкие уязвимости: ${lowCount.textContent}\n\n`;
+            
+            // Добавление деталей уязвимостей
+            const vulnItems = vulnerabilityList.querySelectorAll('.vulnerability-item');
+            vulnItems.forEach((item, index) => {
+                const title = item.querySelector('.vulnerability-title').textContent;
+                const severity = item.querySelector('.vulnerability-severity').textContent;
+                const description = item.querySelector('.vulnerability-description').textContent;
+                const solution = item.querySelector('.vulnerability-solution p').textContent;
+                
+                reportContent += `${index + 1}. ${title} (${severity})\n`;
+                reportContent += `   Описание: ${description}\n`;
+                reportContent += `   Решение: ${solution}\n\n`;
+            });
+            
+            // Создание и скачивание файла
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `vulnerability-scan-${target}-${date.replace(/\./g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Отчет успешно экспортирован!');
+        });
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>

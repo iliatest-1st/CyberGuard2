@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фишинг и целевой фишинг | CyberGuard Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a9eff;
+            --primary-dark: #3a7edf;
+            --secondary: #6a4aff;
+            --accent: #ff4a4a;
+            --dark-bg: #0a0a1a;
+            --dark-card: #1a1a3a;
+            --dark-border: #2a2a5a;
+            --text: #e0e0ff;
+            --text-light: #b0b0ff;
+            --success: #4aff7a;
+            --warning: #ffb84a;
+            --danger: #ff4a4a;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(to right, var(--dark-bg), var(--dark-card));
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dark-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 36px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a {
+            color: var(--text-light);
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+        
+        /* Герой-секция */
+        .page-hero {
+            background: linear-gradient(rgba(10, 10, 26, 0.9), rgba(10, 10, 26, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a3a"/><path d="M0 0L100 100M100 0L0 100" stroke="%232a2a5a" stroke-width="1"/></svg>');
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 15px rgba(74, 158, 255, 0.7);
+        }
+        
+        .page-hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Основной контент */
+        .content-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        /* Карточки */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, var(--dark-card), var(--dark-border));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 25px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .card p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        /* Таблицы */
+        .table-container {
+            overflow-x: auto;
+            margin: 40px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--dark-card);
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        th {
+            background: var(--dark-border);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(74, 158, 255, 0.05);
+        }
+        
+        /* Пример фишингового письма */
+        .phishing-example {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .phishing-example h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .email-header {
+            background: var(--dark-border);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+        
+        .email-body {
+            background: var(--dark-bg);
+            padding: 20px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+        
+        .warning-sign {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Инфографика */
+        .infographic {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 50px 0;
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .infographic-content {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+        
+        .infographic-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-bg);
+            padding: 70px 0 30px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .page-hero p {
+                font-size: 18px;
+            }
+            
+            .infographic {
+                flex-direction: column;
+            }
+            
+            .infographic-content {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+        }
+        
+        /* Дополнительные стили */
+        .risk-level {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .high {
+            background: rgba(255, 184, 74, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        .critical {
+            background: rgba(255, 74, 74, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .protection-tips {
+            background: rgba(74, 255, 122, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .protection-tips h3 {
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+        
+        .quiz-container {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .quiz-question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .quiz-option:hover {
+            background: rgba(74, 158, 255, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--dark-border);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+        }
+        
+        .stat-badge i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="onepart.html#home" class="logo">
+                    <i class="fas fa-shield-alt"></i> Cyber<span>Guard</span>
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-bug"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-user-shield"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-tools"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                        <li><a href="onepart.html#resources"><i class="fas fa-book"></i> Ресурсы</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Обратные категории -->
+    <div class="container">
+        <div class="breadcrumbs">
+            <a href="onepart.html#home">Главная</a> > <a href="onepart.html#threats">Угрозы</a> > Фишинг и целевой фишинг
+        </div>
+    </div>
+
+    <!-- Основная страница -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Фишинг и целевой фишинг</h1>
+            <p>Узнайте, как распознать и защититься от самых распространенных кибератак, нацеленных на человеческий фактор.</p>
+            <div class="stat-badge">
+                <i class="fas fa-exclamation-triangle"></i> <span>Более 90% успешных кибератак начинаются с фишинга</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Что такое фишинг?</h2>
+            <p class="section-subtitle">Фишинг — это вид интернет-мошенничества, целью которого является получение доступа к конфиденциальным данным пользователей: логинам, паролям, данным банковских карт.</p>
+            
+            <div class="infographic">
+                <div class="infographic-content">
+                    <h3>Как работает фишинг?</h3>
+                    <p>Злоумышленники создают поддельные веб-сайты или отправляют электронные письма, которые выглядят как сообщения от доверенных организаций (банков, социальных сетей, почтовых сервисов).</p>
+                    <p>Цель — заставить пользователя добровольно предоставить свои личные данные или установить вредоносное программное обеспечение.</p>
+                </div>
+                <div class="infographic-image">
+                    <div style="font-size: 100px; color: var(--primary);">
+                        <i class="fas fa-fishing-rod"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Электронный фишинг</h3>
+                    <p>Наиболее распространенный вид фишинга, осуществляемый через электронную почту. Мошенники рассылают письма, маскируясь под известные компании.</p>
+                    <div class="card-footer">
+                        <span class="risk-level high">Высокий риск</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-sms"></i></div>
+                    <h3>Смишинг (SMS-фишинг)</h3>
+                    <p>Фишинг через SMS-сообщения. Пользователям приходят текстовые сообщения с ссылками на фишинговые сайты или номерами для обратного звонка.</p>
+                    <div class="card-footer">
+                        <span class="risk-level high">Высокий риск</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-phone"></i></div>
+                    <h3>Вишинг (голосовой фишинг)</h3>
+                    <p>Мошенники звонят жертвам, представляясь сотрудниками банков или других организаций, и пытаются выведать конфиденциальную информацию.</p>
+                    <div class="card-footer">
+                        <span class="risk-level high">Высокий риск</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Целевой фишинг (Spear Phishing)</h2>
+            <p class="section-subtitle">В отличие от массового фишинга, целевой фишинг направлен на конкретных лиц или организации. Атаки тщательно подготовлены и используют персональную информацию о жертве.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Характеристика</th>
+                            <th>Массовый фишинг</th>
+                            <th>Целевой фишинг</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Цель</td>
+                            <td>Большое количество случайных пользователей</td>
+                            <td>Конкретные лица или организации</td>
+                        </tr>
+                        <tr>
+                            <td>Подготовка</td>
+                            <td>Минимальная, шаблонные сообщения</td>
+                            <td>Тщательная, персонализированные сообщения</td>
+                        </tr>
+                        <tr>
+                            <td>Эффективность</td>
+                            <td>Низкая (0.1-1%)</td>
+                            <td>Высокая (10-30%)</td>
+                        </tr>
+                        <tr>
+                            <td>Ущерб</td>
+                            <td>Небольшой для отдельных жертв</td>
+                            <td>Значительный для организаций</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="phishing-example">
+                <h3>Пример фишингового письма</h3>
+                <div class="email-header">
+                    <div><strong>От:</strong> security@bank-example.com</div>
+                    <div><strong>Кому:</strong> client@example.com</div>
+                    <div><strong>Тема:</strong> Срочно: Подтвердите свою учетную запись!</div>
+                </div>
+                <div class="email-body">
+                    <p>Уважаемый клиент,</p>
+                    <p>Мы обнаружили подозрительную активность в вашей учетной записи. Для защиты ваших средств необходимо немедленно подтвердить свои данные.</p>
+                    <p>Перейдите по ссылке ниже чтобы подтвердить свою учетную запись:</p>
+                    <p><a href="#" class="warning-sign">https://bank-example-security.com/verify</a></p>
+                    <p>Если вы не предпримете действий в течение 24 часов, ваша учетная запись будет заблокирована.</p>
+                    <p>С уважением,<br>Служба безопасности "Статус Банк"</p>
+                </div>
+                <div class="protection-tips">
+                    <h3><i class="fas fa-shield-alt"></i> Признаки фишинга в этом письме:</h3>
+                    <ul>
+                        <li>Срочность и угрозы ("Срочно", "в течение 24 часов")</li>
+                        <li>Несоответствующий домен в ссылке (bank-example-security.com вместо bank-example.com)</li>
+                        <li>Обобщенное обращение ("Уважаемый клиент" вместо имени)</li>
+                        <li>Требование немедленных действий</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Как защититься от фишинга?</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Проверяйте отправителя</h3>
+                    <p>Всегда проверяйте адрес электронной почты отправителя, даже если имя кажется знакомым.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Не переходите по ссылкам</h3>
+                    <p>Вместо перехода по ссылке в письме, вручную введите адрес сайта в браузере.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Включите двухфакторную аутентификацию</h3>
+                    <p>Даже если мошенники получат ваш пароль, без второго фактора они не смогут войти в аккаунт.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Обновляйте программное обеспечение</h3>
+                    <p>Регулярные обновления закрывают уязвимости, которые могут использовать фишеры.</p>
+                </div>
+            </div>
+            
+            <div class="quiz-container">
+                <h3>Проверьте свои знания</h3>
+                <div class="quiz-question">Что из перечисленного является самым надежным способом защиты от фишинга?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">Использование сложных паролей</div>
+                    <div class="quiz-option" data-correct="true">Критическое мышление и проверка источников</div>
+                    <div class="quiz-option" data-correct="false">Антивирусное программное обеспечение</div>
+                    <div class="quiz-option" data-correct="false">Использование VPN</div>
+                </div>
+                <button class="btn btn-primary" id="submit-answer">Проверить ответ</button>
+                <div id="quiz-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="onepart.html#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                        <li><a href="onepart.html#threats"><i class="fas fa-chevron-right"></i> Угрозы</a></li>
+                        <li><a href="onepart.html#protection"><i class="fas fa-chevron-right"></i> Защита</a></li>
+                        <li><a href="onepart.html#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                        <li><a href="onepart.html#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="termins.html#"><i class="fas fa-chevron-right"></i> Список терминов</a></li>
+                        <li><a href="infograph.html"><i class="fas fa-chevron-right"></i> Инфографика</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; Создатель Петров Илья.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Функциональность теста
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        const submitButton = document.getElementById('submit-answer');
+        const quizResult = document.getElementById('quiz-result');
+        
+        quizOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                quizOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        submitButton.addEventListener('click', function() {
+            const selectedOption = document.querySelector('.quiz-option.selected');
+            
+            if (!selectedOption) {
+                alert('Пожалуйста, выберите вариант ответа!');
+                return;
+            }
+            
+            const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+            
+            if (isCorrect) {
+                quizResult.innerHTML = `
+                    <div style="background: rgba(74, 255, 122, 0.1); border: 1px solid var(--success); border-radius: 10px; padding: 20px; margin-top: 20px;">
+                        <h4 style="color: var(--success); margin-bottom: 10px;"><i class="fas fa-check-circle"></i> Правильно!</h4>
+                        <p>Критическое мышление и проверка источников — самый эффективный способ защиты от фишинга, так как фишинг атакует человеческий фактор, а не технические уязвимости.</p>
+                    </div>
+                `;
+            } else {
+                quizResult.innerHTML = `
+                    <div style="background: rgba(255, 74, 74, 0.1); border: 1px solid var(--danger); border-radius: 10px; padding: 20px; margin-top: 20px;">
+                        <h4 style="color: var(--danger); margin-bottom: 10px;"><i class="fas fa-times-circle"></i> Неправильно</h4>
+                        <p>Хотя сложные пароли, антивирусы и VPN важны для общей безопасности, именно критическое мышление и проверка источников являются ключевыми для защиты от фишинговых атак.</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Предотвращение перехода по фишинговой ссылке в примере
+        document.querySelectorAll('.warning-sign').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Это пример фишинговой ссылки! В реальной ситуации не переходите по подобным ссылкам.');
+            });
+        });
+    </script>
+</body>
+</html>
